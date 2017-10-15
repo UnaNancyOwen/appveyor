@@ -16,22 +16,7 @@ before_build:
   - cmd: >-
     mkdir build
     cd build
-
-    set generator
-    if "%image%" == "Visual Studio 2017" (
-      if "%platform" == "Win32" (
-        set generator="Visual Studio 15 2017"
-      ) else (
-        set generator="Visual Studio 15 2017 Win64"
-      )
-    ) else if "%image%" == "Visual Studio 2015" (
-      if "%platform" == "Win32" (
-        set generator="Visual Studio 14 2015"
-      ) else (
-        set generator="Visual Studio 14 2015 Win64"
-      )
-    )
-
+    set generator="Visual Studio 15 2017 Win64"
     cmake .. -G %generator%
 
 build_script:
