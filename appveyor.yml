@@ -4,6 +4,8 @@ platform: x64
 configuration: Release
 before_build: 
 - cmd: >-
+    dir C:\Libraries
+
     mkdir build
 
     cd build
