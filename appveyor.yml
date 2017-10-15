@@ -5,8 +5,11 @@ configuration: Release
 before_build: 
 - cmd: >-
     mkdir build
+
     cd build
+
     set generator="Visual Studio 15 2017 Win64"
+
     cmake .. -G %generator%
 build_script: 
 - cmd: >-
