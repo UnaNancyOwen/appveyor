@@ -1,24 +1,24 @@
 clone_folder: C:\projects\appveyor
 
-image:
+image: 
   #- Visual Studio 2015
   - Visual Studio 2017
 
-platform:
+platform: 
   #- Win32
   - x64
 
-configuration:
+configuration: 
   #- Debug
   - Release
 
-before_build:
-  - cmd: >-
+before_build: 
+  - cmd: >- 
     mkdir build
     cd build
     set generator="Visual Studio 15 2017 Win64"
     'cmake .. -G %generator%'
 
-build_script:
-  - cmd: >-
+build_script: 
+  - cmd: >- 
     'cmake --build . --config %configuration%'
