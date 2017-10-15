@@ -37,5 +37,5 @@ before_build:
     cmake .. -G %generator%
 
 build_script:
-  -cmd: >-
+  - cmd: >-
     cmake --build . --config %configuration%
