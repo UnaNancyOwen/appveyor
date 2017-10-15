@@ -3,11 +3,11 @@ image: Visual Studio 2017
 platform: x64
 configuration: Release
 before_build: 
-  - cmd: >- 
+- cmd: >-
     mkdir build
     cd build
     set generator="Visual Studio 15 2017 Win64"
-    'cmake .. -G %generator%'
+    cmake .. -G %generator%
 build_script: 
-  - cmd: >- 
-    'cmake --build . --config %configuration%'
+- cmd: >-
+    cmake --build . --config %configuration%
