@@ -4,6 +4,8 @@ platform: x64
 configuration: Release
 before_build: 
 - cmd: >-
+    vcpkg version
+
     dir C:\Libraries
 
     mkdir build
