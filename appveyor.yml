@@ -1,20 +1,25 @@
-clone_folder: C:\projects\appveyor
-image: Visual Studio 2017
-platform: x64
+image:
+  - Visual Studio 2015
+  - Visual Studio 2017
+
+cache:
+  - c:\tools\vcpkg\installed\
+
+install:
+  - cd c:\tools\vcpkg
+  - git pull
+  - .\bootstrap-vcpkg.bat
+  - vcpkg version
+  - vcpkg install qhull
+
 configuration: Release
-before_build: 
-- cmd: >-
-    vcpkg version
 
-    dir C:\Libraries
+build:
+  parallel: true
 
-    mkdir build
-
-    cd build
-
-    set generator="Visual Studio 15 2017 Win64"
-
-    cmake .. -G %generator%
-build_script: 
-- cmd: >-
-    cmake --build . --config %configuration%
+build_script:
+  - cd c:\projects\appveyor
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - cmake --build . --config Release
