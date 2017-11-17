@@ -21,14 +21,14 @@ build:
 
 environment:
   matrix:
-    - GENERATOR: "Visual Studio 15 2017 Win64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - GENERATOR: "Visual Studio 14 2015 Win64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      GENERATOR: "Visual Studio 14 2015 Win64"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      GENERATOR: "Visual Studio 15 2017 Win64"
 
 build_script:
   - cd c:\projects\appveyor
   - mkdir build
   - cd build
-  - cmake -G%GENERATOR% -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - cmake -G"%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build . --config Release
