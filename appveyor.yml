@@ -10,7 +10,7 @@ install:
   - git pull
   - .\bootstrap-vcpkg.bat
   - vcpkg version
-  - vcpkg install qhull
+  - vcpkg install qhull boost eigen3 flann qhull
 
 configuration: Release
 
