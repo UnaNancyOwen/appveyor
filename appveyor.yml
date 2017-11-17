@@ -10,7 +10,9 @@ install:
   - git pull
   - .\bootstrap-vcpkg.bat
   - vcpkg version
-  - vcpkg install boost eigen3 flann qhull
+  - vcpkg install boost:x64-windows eigen3:x64-windows flann:x64-windows qhull:x64-windows
+
+platform: x64
 
 configuration: Release
 
