@@ -40,5 +40,5 @@ build_script:
   - cd c:\projects\appveyor
   - mkdir build
   - cd build
-  - cmake -G"%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - cmake -G%GENERATOR% -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build . --config Release
