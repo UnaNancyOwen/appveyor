@@ -11,9 +11,13 @@ install:
   - .\bootstrap-vcpkg.bat
   - vcpkg version
   #- vcpkg install boost:x64-windows eigen3:x64-windows flann:x64-windows qhull:x64-windows
-  - dir
-  - cd c:\tools\vcpkg\downloads
-  - dir
+  - cd ..
+  - mkdir 7zip
+  - cd 7zip
+  - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
+  - appveyor DownloadFile %NINJA_URL% -FileName ninja-win.zip
+  - 7z x ninja-win.zip
+  - set PATH=c:\tools\ninja;%PATH%
   - ninja --version
 
 platform: x64
@@ -26,9 +30,11 @@ build:
 environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      GENERATOR: "Visual Studio 14 2015 Win64"
+      #GENERATOR: "Visual Studio 14 2015 Win64"
+      GENERATOR: "Ninja"
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      GENERATOR: "Visual Studio 15 2017 Win64"
+      #GENERATOR: "Visual Studio 15 2017 Win64"
+      GENERATOR: "Ninja"
 
 build_script:
   - cd c:\projects\appveyor
