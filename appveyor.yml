@@ -10,7 +10,7 @@ install:
   - git pull
   - .\bootstrap-vcpkg.bat
   - vcpkg version
-  - vcpkg install boost:x64-windows eigen3:x64-windows flann:x64-windows qhull:x64-windows
+  #- vcpkg install boost:x64-windows eigen3:x64-windows flann:x64-windows qhull:x64-windows
   - dir
   - cd c:\tools\vcpkg\downloads
   - dir
