@@ -50,7 +50,7 @@ build:
   parallel: true
 
 build_script:
-  - call "%VSDEVCMD%" -host_arch=x86 -arch=%ARCHITECTURE%
+  - call %VSDEVCMD% -host_arch=x86 -arch=%ARCHITECTURE%
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir build
   - cd build
