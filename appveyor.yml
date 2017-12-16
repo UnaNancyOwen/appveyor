@@ -28,6 +28,7 @@ init:
   - .\bootstrap-vcpkg.bat
   - vcpkg version
   - set PATH=%VCPKG_DIR%\installed\%PLATFORM%-windows\bin;%PATH%
+  - mkdir %NINJA_DIR%
   - cd %NINJA_DIR%
   - if not exist ninja-win.zip appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
   - if not exist ninja.exe 7z x ninja-win.zip
