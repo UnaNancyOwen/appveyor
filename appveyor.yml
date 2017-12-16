@@ -6,6 +6,7 @@ cache:
   - c:\tools\vcpkg\installed\
 
 install:
+  - set
   - cd c:\tools\vcpkg
   - git pull
   - .\bootstrap-vcpkg.bat
@@ -36,7 +37,7 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       #GENERATOR: "Visual Studio 15 2017 Win64"
       GENERATOR: "Ninja"
-      CXX_COMPILER: "C:\\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC"
+      CXX_COMPILER: "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC"
 
 build_script:
   - cd "%CXX_COMPILER%"
