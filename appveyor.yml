@@ -11,22 +11,22 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x86
       GENERATOR: "Ninja"
-      VSDEVCMD: "%PROGRAMFILES(X86)%\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
+      VSDEVCMD: "C:\PROGRA~2\MICROS~1.0\Common7\Tools\VsDevCmd.bat"
       ARCHITECTURE: x86
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x64
       GENERATOR: "Ninja"
-      VSDEVCMD: "%PROGRAMFILES(X86)%\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
+      VSDEVCMD: "C:\PROGRA~2\MICROS~1.0\Common7\Tools\VsDevCmd.bat"
       ARCHITECTURE: amd64
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
       PLATFORM: x86
       GENERATOR: "Ninja"
-      VSDEVCMD: "%PROGRAMFILES(X86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+      VSDEVCMD: "C:\PROGRA~2\MIB055~1\2017\Community\Common7\Tools\VsDevCmd.bat"
       ARCHITECTURE: x86
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
       PLATFORM: x64
       GENERATOR: "Ninja"
-      VSDEVCMD: "%PROGRAMFILES(X86)%\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+      VSDEVCMD: "C:\PROGRA~2\MIB055~1\2017\Community\Common7\Tools\VsDevCmd.bat"
       ARCHITECTURE: amd64
 
 init:
