@@ -1,49 +1,57 @@
-#image:
-#  - Visual Studio 2015
-#  - Visual Studio 2017
-
 cache:
   - c:\tools\vcpkg\installed\
 
-install:
+configuration: Release
+
+environment:
+  VCPKG_DIR: C:\Tools\vcpkg
+  matrix:
+    - GENERATOR: "Visual Studio 14 2015"
+      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+      PLATFORM: x86
+    - GENERATOR: "Visual Studio 14 2015 Win64"
+      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+      PLATFORM: x64
+    # #Uncoment this block once MSVC2017 is patched.
+    # - GENERATOR: "Visual Studio 15 2017"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+    #   PLATFORM: x86
+    # - GENERATOR: "Visual Studio 15 2017 Win64"
+    #   APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+    #   PLATFORM: x64
+
+# Runs before cache setup
+init:
   - set
-  - cd c:\tools\vcpkg
+  - cd %VCPKG_DIR%
   - git pull
+  - echo.set(VCPKG_BUILD_TYPE release)>> %VCPKG_DIR%\triplets\%PLATFORM%-windows.cmake
   - .\bootstrap-vcpkg.bat
   - vcpkg version
-  #- vcpkg install boost:x64-windows eigen3:x64-windows flann:x64-windows qhull:x64-windows
-  - cd ..
-  - mkdir 7zip
-  - cd 7zip
-  - set NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
-  - appveyor DownloadFile %NINJA_URL% -FileName ninja-win.zip
-  - 7z x ninja-win.zip
-  - set PATH=c:\tools\ninja;%PATH%
-  - ninja --version
+  - set PATH=%VCPKG_DIR%\installed\%PLATFORM%-windows\bin;%PATH%
+  - cd %APPVEYOR_BUILD_FOLDER%
 
-platform: x64
-
-configuration: Release
+install:
+  - vcpkg install boost eigen3 flann qhull gtest --triplet %PLATFORM%-windows
 
 build:
   parallel: true
 
-environment:
-  matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      #GENERATOR: "Visual Studio 14 2015 Win64"
-      GENERATOR: "Ninja"
-      CXX_COMPILER: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      #GENERATOR: "Visual Studio 15 2017 Win64"
-      GENERATOR: "Ninja"
-      CXX_COMPILER: "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC"
-
 build_script:
-  - cd "%CXX_COMPILER%"
-  - .\vcvarsall.bat %platform%
-  - cd c:\projects\appveyor
+  - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir build
   - cd build
-  - cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - cmake --build . --config Release
+  - cmake -G"%GENERATOR%"
+          -DCMAKE_TOOLCHAIN_FILE=%VCPKG_DIR%\scripts\buildsystems\vcpkg.cmake
+          -DVCPKG_APPLOCAL_DEPS=OFF
+          -DPCL_BUILD_WITH_BOOST_DYNAMIC_LINKING_WIN32=ON
+          -DPCL_BUILD_WITH_FLANN_DYNAMIC_LINKING_WIN32=ON
+          -DPCL_NO_PRECOMPILE=OFF
+          -DBUILD_simulation=ON
+          -DBUILD_global_tests=ON
+          -DBUILD_examples=OFF
+          -DBUILD_tools=OFF
+          -DBUILD_apps=OFF
+          ..
+  - cmake --build . --config %CONFIGURATION%
+  - ctest -C %CONFIGURATION% -V
