@@ -1,33 +1,37 @@
 cache:
-  - c:\tools\vcpkg\installed\
+  - C:\Tools\vcpkg\installed\
+  - C:\Tools\ninja
 
 configuration: Release
 
 environment:
   VCPKG_DIR: C:\Tools\vcpkg
+  NINJA_DIR: C:\Tools\ninja
   matrix:
-    - GENERATOR: "Visual Studio 14 2015"
-      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x86
-    - GENERATOR: "Visual Studio 14 2015 Win64"
-      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+      GENERATOR: "Ninja"
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x64
-    - GENERATOR: "Visual Studio 15 2017"
-      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+      GENERATOR: "Ninja"
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
       PLATFORM: x86
-    - GENERATOR: "Visual Studio 15 2017 Win64"
-      APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+      GENERATOR: "Ninja"
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
       PLATFORM: x64
+      GENERATOR: "Ninja"
 
-# Runs before cache setup
 init:
-  - set
   - cd %VCPKG_DIR%
   - git pull
   - echo.set(VCPKG_BUILD_TYPE release)>> %VCPKG_DIR%\triplets\%PLATFORM%-windows.cmake
   - .\bootstrap-vcpkg.bat
   - vcpkg version
   - set PATH=%VCPKG_DIR%\installed\%PLATFORM%-windows\bin;%PATH%
+  - cd %NINJA_DIR%
+  - if not exist ninja-win.zip appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
+  - if not exist ninja.exe 7z x ninja-win.zip
+  - set PATH=%NINJA_DIR%;%PATH%
   - cd %APPVEYOR_BUILD_FOLDER%
 
 install:
@@ -41,6 +45,8 @@ build_script:
   - mkdir build
   - cd build
   - cmake -G"%GENERATOR%"
+          -DCMAKE_C_COMPILER=cl.exe
+          -DCMAKE_CXX_COMPILER=cl.exe
           -DCMAKE_TOOLCHAIN_FILE=%VCPKG_DIR%\scripts\buildsystems\vcpkg.cmake
           -DVCPKG_APPLOCAL_DEPS=OFF
           -DPCL_BUILD_WITH_BOOST_DYNAMIC_LINKING_WIN32=ON
