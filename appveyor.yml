@@ -40,7 +40,7 @@ init:
 install:
   - vcpkg install boost eigen3 flann qhull gtest --triplet %PLATFORM%-windows
   - set PATH=%VCPKG_DIR%\installed\%PLATFORM%-windows\bin;%PATH%
-  - mkdir %NINJA_DIR% > NUL 2>&1
+  - if not exist %NINJA_DIR%\ mkdir %NINJA_DIR%
   - cd %NINJA_DIR%
   - if not exist ninja.exe appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
   - if not exist ninja.exe 7z x ninja-win.zip
