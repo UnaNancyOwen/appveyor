@@ -63,7 +63,7 @@ build_script:
           -DPCL_BUILD_WITH_FLANN_DYNAMIC_LINKING_WIN32=ON
           -DPCL_NO_PRECOMPILE=OFF
           -DBUILD_simulation=ON
-          -DBUILD_global_tests=ON
+          -DBUILD_global_tests=OFF
           -DBUILD_examples=OFF
           -DBUILD_tools=OFF
           -DBUILD_apps=OFF
